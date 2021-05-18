@@ -1,17 +1,40 @@
 import styled from 'styled-components'
 import { links } from '../data'
 import { auth, provider } from '../firebase'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import {
+  selectUserName,
+  setUserLoginDetails,
+  selectUserPhoto,
+  setSignOutState,
+} from '../features/user/userSlice'
 
 const Header = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const userName = useSelector(selectUserName)
+  const userPhoto = useSelector(selectUserPhoto)
+
   const handleAuth = () => {
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result)
+        setUser(result.user)
       })
       .catch((error) => {
         alert(error.message)
       })
+  }
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    )
   }
 
   return (
@@ -19,18 +42,25 @@ const Header = () => {
       <Logo>
         <img src="/images/logo.svg" alt="Disney+ logo" />
       </Logo>
-      <NavMenu>
-        {links.map((item) => {
-          const { id, link, icon, url } = item
-          return (
-            <a href={url} key={id}>
-              <img src={icon} alt="icon menu" />
-              <span>{link}</span>
-            </a>
-          )
-        })}
-      </NavMenu>
-      <Login onClick={handleAuth}>login</Login>
+
+      {!userName ? (
+        <Login onClick={handleAuth}>login</Login>
+      ) : (
+        <>
+          <NavMenu>
+            {links.map((item) => {
+              const { id, link, icon, url } = item
+              return (
+                <a href={url} key={id}>
+                  <img src={icon} alt="icon menu" />
+                  <span>{link}</span>
+                </a>
+              )
+            })}
+          </NavMenu>
+          <UserImg src={userPhoto} alt="user photo" />
+        </>
+      )}
     </Nav>
   )
 }
@@ -144,6 +174,10 @@ const Login = styled.a`
     color: #000;
     border-color: transparent;
   }
+`
+
+const UserImg = styled.img`
+  height: 100%;
 `
 
 export default Header
