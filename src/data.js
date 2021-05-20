@@ -31,3 +31,22 @@ export const links = [
     icon: '/images/series-icon.svg',
   },
 ]
+
+export const sliders = [
+  {
+    id: 1,
+    image: '/images/slider-badging.jpg',
+  },
+  {
+    id: 2,
+    image: '/images/slider-scale.jpg',
+  },
+  {
+    id: 3,
+    image: '/images/slider-badag.jpg',
+  },
+  {
+    id: 4,
+    image: '/images/slider-scales.jpg',
+  },
+]
