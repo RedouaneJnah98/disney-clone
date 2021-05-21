@@ -22,33 +22,21 @@ const Home = () => {
   useEffect(() => {
     db.collection('movies').onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
-        // switch (doc.data().type) {
-        //   case 'recommend':
-        //     recommends = [...recommends, { id: doc.id, ...doc.data() }]
-        //     break
+        switch (doc.data().type) {
+          case 'recommend':
+            recommends = [...recommends, { id: doc.id, ...doc.data() }]
+            break
 
-        //   case 'new':
-        //     newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }]
-        //     break
+          case 'new':
+            newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }]
+            break
 
-        //   case 'original':
-        //     originals = [...originals, { id: doc.id, ...doc.data() }]
-        //     break
+          case 'original':
+            originals = [...originals, { id: doc.id, ...doc.data() }]
+            break
 
-        //   case 'trending':
-        //     trending = [...trending, { id: doc.id, ...doc.data() }]
-        // }
-        if (doc.data().type === 'recommend') {
-          return (recommends = [...recommends, { id: doc.id, ...doc.data() }])
-        }
-        if (doc.data().type === 'new') {
-          return (newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }])
-        }
-        if (doc.data().type === 'original') {
-          return (originals = [...originals, { id: doc.id, ...doc.data() }])
-        }
-        if (doc.data().type === 'trending') {
-          return (trending = [...trending, { id: doc.id, ...doc.data() }])
+          case 'trending':
+            trending = [...trending, { id: doc.id, ...doc.data() }]
         }
       })
 
