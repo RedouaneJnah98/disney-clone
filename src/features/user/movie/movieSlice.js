@@ -28,3 +28,5 @@ const selectOriginal = (state) => state.movie.original
 const selectTrending = (state) => state.movie.trending
 
 export { selectNewDisney, selectTrending, selectOriginal, selectRecommend }
+
+export default movieSlice.reducer
